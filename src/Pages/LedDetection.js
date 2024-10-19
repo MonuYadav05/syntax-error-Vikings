@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Led from "../Components/Led";
+import { Link } from "react-router-dom";
+import { TypeAnimation } from "react-type-animation";
 
 function LedDetection() {
   const [ledCount, setLedCount] = useState(0);
   const [isCameraOn, setIsCameraOn] = useState(false); // State to track camera status
-  const [mode, setMode] = useState(0); // 1-> light, 0-> dark
   const [volume, setVolume] = useState(0);
 
   const colors = ["green", "red", "blue", "yellow", "Fuchsia"];
@@ -46,19 +47,18 @@ function LedDetection() {
 
   return (
     <div
-      className={`flex flex-col items-center justify-center min-h-screen p-5 ${
-        mode ? "bg-white text-black" : "bg-black text-white"
-      }`}
+      className={`flex flex-col items-center justify-center min-h-screen p-5 text-white`}
     >
-      <button
-        className="absolute right-5 top-12 rounded-[10px] bg-blue-500 text-white p-2"
-        onClick={() => {
-          setMode(!mode);
-        }}
-      >
-        Toggle Theme
-      </button>
-      <div className="flex justify-center gap-5 mb-10">
+      <div>
+        <Link
+          to={"/face-detection"}
+          className="absolute left-20 top-12 rounded-[10px] bg-blue-500 text-white p-2"
+        >
+          FaceDetection
+        </Link>
+      </div>
+
+      <div className="flex justify-center">
         {colors.map((color, index) => (
           <Led
             key={color}
@@ -68,7 +68,10 @@ function LedDetection() {
           />
         ))}
       </div>
-
+      <br />
+      <br />
+      <br />
+      <br />
       <h1 className="text-3xl font-bold mb-4">Hand Gesture Recognition</h1>
       {isCameraOn && (
         <div className="mb-4 flex justify-center items-center">
@@ -79,6 +82,7 @@ function LedDetection() {
           />
         </div>
       )}
+
       <h2 className="text-2xl font-semibold mb-4">
         Number of LEDs to Light Up:{" "}
         <span className="text-blue-600">{ledCount}</span>
@@ -94,6 +98,21 @@ function LedDetection() {
       >
         {isCameraOn ? "Turn Off Camera" : "Turn On Camera"}
       </button>
+
+      <div className="absolute left-10 bottom-30">
+        <TypeAnimation
+          sequence={[
+            `Monu Yadav\n Milin Sharma\n Hari Om Sharma\n Raj Rabidas`, // All names displayed
+            1000, // Wait 1 second after all names are shown
+            "", // Start deleting the text
+            1000, // Wait before starting to erase
+          ]}
+          speed={50} // Adjust typing speed
+          deletionSpeed={40} // Adjust deletion speed
+          wrapper="span" // Element to wrap the text (can be "span", "h1", "div", etc.)
+          repeat={Infinity} // Set to loop the animation indefinitely
+        />
+      </div>
     </div>
   );
 }
